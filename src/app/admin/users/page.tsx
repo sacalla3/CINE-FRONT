@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { act, useEffect, useState } from 'react';
 import { UsersTable } from '../../components/UsersTable';
 import { SearchUserBar } from '../../components/SearchUserBar';
 import RegisterUserForm from '../../components/FormRegister';
@@ -12,6 +12,7 @@ interface User {
   email: string;
   nickname: string;
   role: string;
+  activo: boolean;
 }
 
 export default function UsersPage() {
@@ -38,15 +39,22 @@ export default function UsersPage() {
         setError('No autorizado o error al obtener usuarios');
         return;
       }
-      const data = await res.json();
-      const filteredUsers = data.map((u: any) => ({
-        id: u.id,
-        cedula: u.cedula,
-        name: u.name,
-        email: u.email,
-        nickname: u.nickname,
-        role: u.role,
-      }));
+            const data = await res.json();
+      // Agrega el campo activo y ordena por rol
+      const filteredUsers = data
+        .map((u: any) => ({
+          id: u.id,
+          cedula: u.cedula,
+          name: u.name,
+          email: u.email,
+          nickname: u.nickname,
+          role: u.role,
+          activo: u.isActive, 
+        }))
+        .sort((a: User, b: User) => {
+          const roleOrder: Record<'admin' | 'seller' | 'client', number> = { admin: 0, seller: 1, client: 2 };
+          return (roleOrder[a.role as 'admin' | 'seller' | 'client'] ?? 3) - (roleOrder[b.role as 'admin' | 'seller' | 'client'] ?? 3);
+        });
       setUsers(filteredUsers);
     } catch (err) {
       setError('Error de red o del servidor');
@@ -61,8 +69,25 @@ export default function UsersPage() {
     alert(`Editar usuario: ${user.name}`);
   };
 
-  const handleDelete = (user: User) => {
-    alert(`Eliminar usuario: ${user.name}`);
+    const handleDelete = async (user: User) => {
+    if (!confirm(`¿Seguro que deseas eliminar al usuario con cédula ${user.cedula}?`)) return;
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`http://localhost:3000/api/users/${user.cedula}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!res.ok) {
+        alert('No se pudo eliminar el usuario.');
+        return;
+      }
+      fetchUsers();
+    } catch (err) {
+      alert('Error al eliminar el usuario.');
+    }
   };
 
   return (

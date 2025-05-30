@@ -44,8 +44,7 @@ const menuItems = [
 export const Sidebar = () => {
     return (
         <div
-            style={{ width: '400px' }}
-            id="menu" className="bg-black min-h-screen z-10 text-slate-300 w-64 left-0 h-screen overflow-y-scroll">
+            id="menu" className="bg-black fixed top-0 left-0 z-10 text-slate-300 w-64 h-screen flex flex-col">
             <div id="logo" className="my-4 px-6">
                 <h1 className="text-lg md:text-2xl font-bold text-white">Alpha<span className="text-blue-500">Movie</span>.</h1>
                 <p className="text-slate-500 text-sm">Panel de administración</p>
