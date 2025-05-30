@@ -4,7 +4,11 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-export default function RegisterUserForm({ onSuccess,onClose }: { onSuccess?: () => void, onClose?: () => void }) {
+export default function RegisterUserForm({ 
+    onSuccess,onClose,showLoginButton = false 
+    }: { 
+      onSuccess?: () => void, onClose?: () => void, showLoginButton?: boolean 
+    }) {
   const [name, setName] = useState('');
   const [cedula, setCedula] = useState('');
   const [email, setEmail] = useState('');
@@ -50,88 +54,76 @@ export default function RegisterUserForm({ onSuccess,onClose }: { onSuccess?: ()
     }
   };
 
-  return (
-    <div className="font-sans">
-      <div className="relative flex flex-col sm:justify-center items-center bg-gray-100">
-        <div className="relative sm:max-w-sm w-full">
-          <div className="card bg-blue-400 shadow-lg w-full h-full rounded-3xl absolute transform -rotate-6"></div>
-          <div className="card bg-red-400 shadow-lg w-full h-full rounded-3xl absolute transform rotate-6"></div>
-          <div className="relative w-full rounded-3xl px-6 py-4 bg-gray-100 shadow-md">
-            <label className="block mt-3 text-sm text-gray-700 text-center font-semibold">
-              Registrate
-            </label>
-            <form onSubmit={handleSubmit} className="mt-10">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Nombres"
-                  value={name}
-                  onChange={e => setName(e.target.value)}
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-              </div>
-              <div className="mt-7">
-                <input
-                  type="text"
-                  placeholder="Cédula"
-                  value={cedula}
-                  onChange={e => setCedula(e.target.value)}
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-              </div>
-              <div className="mt-7">
-                <input
-                  type="email"
-                  placeholder="Correo electrónico"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-              </div>
-              <div className="mt-7">
-                <input
-                  type="password"
-                  placeholder="Contraseña"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-              </div>
-              <div className="mt-7">
-                <input
-                  type="password"
-                  placeholder="Confirmar contraseña"
-                  value={password2}
-                  onChange={e => setPassword2(e.target.value)}
-                  className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"
-                />
-              </div>
-              {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
-              {success && <div className="mt-4 text-green-600 text-center">{success}</div>}
-              <div className="mt-7">
-                <button
-                  className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105"
-                  type="submit"
-                >
-                  Registrar
-                </button>
-              </div>
-              <div className="mt-7">
-                <div className="flex justify-center items-center">
-                  <label className="mr-2">¿Ya tienes una cuenta?</label>
-                  <button
-                    type="button"
-                    className="text-blue-500 transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105"
-                    onClick={() => onClose ? onClose() : null}
-                  >
-                    Iniciar sesión
-                  </button>
-                </div>
-              </div>
-            </form>
+ return (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+    <div className="relative bg-white rounded-3xl shadow-lg p-8 w-full max-w-md">
+      <button
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 z-10"
+        onClick={() => onClose && onClose()}
+      >
+        ✕
+      </button>
+      <label className="block mt-3 text-xl text-gray-700 text-center font-semibold">
+        Registrate
+      </label>
+      <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        <input
+          type="text"
+          placeholder="Nombres"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          className="block w-full border border-gray-300 bg-gray-100 h-11 rounded-xl shadow-lg px-4 focus:bg-blue-100 focus:ring-0"
+        />
+        <input
+          type="text"
+          placeholder="Cédula"
+          value={cedula}
+          onChange={e => setCedula(e.target.value)}
+          className="block w-full border border-gray-300 bg-gray-100 h-11 rounded-xl shadow-lg px-4 focus:bg-blue-100 focus:ring-0"
+        />
+        <input
+          type="email"
+          placeholder="Correo electrónico"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          className="block w-full border border-gray-300 bg-gray-100 h-11 rounded-xl shadow-lg px-4 focus:bg-blue-100 focus:ring-0"
+        />
+        <input
+          type="password"
+          placeholder="Contraseña"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          className="block w-full border border-gray-300 bg-gray-100 h-11 rounded-xl shadow-lg px-4 focus:bg-blue-100 focus:ring-0"
+        />
+        <input
+          type="password"
+          placeholder="Confirmar contraseña"
+          value={password2}
+          onChange={e => setPassword2(e.target.value)}
+          className="block w-full border border-gray-300 bg-gray-100 h-11 rounded-xl shadow-lg px-4 focus:bg-blue-100 focus:ring-0"
+        />
+        {error && <div className="text-red-500 text-center">{error}</div>}
+        {success && <div className="text-green-600 text-center">{success}</div>}
+        <button
+          className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105"
+          type="submit"
+        >
+          Registrar
+        </button>
+        {showLoginButton && (
+          <div className="flex justify-center items-center mt-4">
+            <label className="mr-2">¿Ya tienes una cuenta?</label>
+            <button
+              type="button"
+              className="text-blue-500 transition duration-500 ease-in-out transform hover:-translate-x hover:scale-105"
+              onClick={() => onClose && onClose()}
+            >
+              Iniciar sesión
+            </button>
           </div>
-        </div>
-      </div>
+        )}
+      </form>
     </div>
-  );
+  </div>
+);
 }

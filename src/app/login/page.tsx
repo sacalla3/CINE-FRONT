@@ -35,21 +35,20 @@ export default function Login() {
         return;
       }
 
-      // Guarda el token en localStorage (o en cookies si prefieres)
       localStorage.setItem('token', token);
-
-      // Redirige al dashboard
       router.push('/dashboard');
     } catch (err) {
       setError('Error de red o del servidor');
     }
   };
+
+  // Mostrar el formulario de registro como modal
   if (showRegister) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <div className="relative w-full max-w-lg">
+      <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg shadow-lg p-6 relative">
           <button
-            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 z-10"
+            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
             onClick={() => setShowRegister(false)}
           >
             ✕
@@ -57,11 +56,13 @@ export default function Login() {
           <RegisterUserForm
             onSuccess={() => setShowRegister(false)}
             onClose={() => setShowRegister(false)}
+            showLoginButton={true}
           />
         </div>
       </div>
     );
   }
+
   return (
     <div className="grid grid-cols-12 font-sans min-h-screen">
       {/* Columna del formulario */}
@@ -93,7 +94,6 @@ export default function Login() {
                 className="w-full bg-black py-3 px-5 border border-gray-700 hover:border-blue-400 rounded shadow outline-none transition duration-300"
               />
             </div>
-            {/* Botón */}
             <div className="pt-10">
               <button
                 type="submit"
@@ -106,14 +106,14 @@ export default function Login() {
           </form>
           {/* Texto adicional */}
           <div className="mt-6">
-                <button
-                    type="button"
-                    className="text-sm text-gray-400 underline"
-                    onClick={() => setShowRegister(true)}
-                >
-                    ¿No tienes una cuenta? Regístrate
-                </button>
-            </div>
+            <button
+              type="button"
+              className="text-sm text-gray-400 underline"
+              onClick={() => setShowRegister(true)}
+            >
+              ¿No tienes una cuenta? Regístrate
+            </button>
+          </div>
         </div>
       </div>
       {/* Imagen lateral derecha */}

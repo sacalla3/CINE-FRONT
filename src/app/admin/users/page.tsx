@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { UsersTable } from '../../components/UsersTable';
+import { SearchUserBar } from '../../components/SearchUserBar';
 import RegisterUserForm from '../../components/FormRegister';
 
 interface User {
@@ -17,6 +18,7 @@ export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState('');
   const [showRegister, setShowRegister] = useState(false);
+  const [foundUser, setFoundUser] = useState<User | null>(null);
 
   const fetchUsers = async () => {
     setError('');
@@ -67,7 +69,18 @@ export default function UsersPage() {
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6">Gestión de usuarios</h1>
       {error && <p className="text-red-500 mb-4">{error}</p>}
-      <UsersTable users={users} onEdit={handleEdit} onDelete={handleDelete} />
+      <div className="w-full flex justify-between items-center mb-3 mt-1 pl-3">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-800">Usuarios</h3>
+          <p className="text-slate-500">Listado de usuarios registrados.</p>
+        </div>
+        <SearchUserBar onResult={setFoundUser} />
+      </div>
+      <UsersTable
+        users={foundUser ? [foundUser] : users}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
       <button
         className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         onClick={() => setShowRegister(true)}
@@ -88,6 +101,8 @@ export default function UsersPage() {
                 setShowRegister(false);
                 fetchUsers();
               }}
+              onClose={() => setShowRegister(false)}
+              showLoginButton={false}
             />
           </div>
         </div>
