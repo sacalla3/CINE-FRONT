@@ -11,3 +11,4 @@ export const getSeatsByFunctionId = async (functionId: string) => {
 
   return response.data;
 };
+

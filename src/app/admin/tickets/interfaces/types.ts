@@ -5,5 +5,6 @@ export interface Ticket {
         dateTime: Date,
         roomNumber: number,
         movieName: string,
-        seatNumber: number,
+        seatNumbers: number[],  // Array de números de asiento
+
     }

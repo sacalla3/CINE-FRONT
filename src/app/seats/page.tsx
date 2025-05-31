@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react';
 import { FaChair } from 'react-icons/fa';
 import { getSeatsByFunctionId } from './services/seatService';
+import { useSelectionStore } from '../store/useSelectionStore';
+import { FunctionDetails } from './components/FunctionDetails';
+import { SeatSummary } from './components/SeatSummary'; // Asegúrate de tenerlo en la ruta correcta
 
 interface Seat {
   id: string;
@@ -10,7 +13,15 @@ interface Seat {
   available: boolean;
 }
 
+
 const SeatsPage = () => {
+
+  const toggleSeatId = useSelectionStore(state => state.toggleSeatId);
+  const setSelectedFunctionId = useSelectionStore(state => state.setSelectedFunctionId);
+  const selectedSeatIds = useSelectionStore(state => state.selectedSeatIds);
+
+  //const setSelectedSeatId = useSelectionStore(state => state.setSelectedSeatId);
+
   const [seats, setSeats] = useState<Seat[]>([]);
   const [loading, setLoading] = useState(true);
   const [functionId, setFunctionId] = useState<string | null>(null);
@@ -18,6 +29,9 @@ const SeatsPage = () => {
   useEffect(() => {
     const id = prompt('Ingresa el ID de la función:');
     if (!id) return;
+
+    // Guardar el ID de la función en el estado global
+    setSelectedFunctionId(id);
 
     setFunctionId(id);
     getSeatsByFunctionId(id)
@@ -38,7 +52,7 @@ const SeatsPage = () => {
   return (
     <div className="p-6 flex flex-col items-center">
       <h2 className="text-xl font-bold mb-4">Sillas de la función</h2>
-
+      <FunctionDetails functionId={functionId} />
       <div className="space-y-2">
         {seatRows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-2">
@@ -47,8 +61,14 @@ const SeatsPage = () => {
                 key={seat.id}
                 disabled={!seat.available}
                 className={`flex flex-col items-center justify-center p-2 rounded text-xs text-white w-12 h-12
-                  ${seat.available ? 'bg-green-600 hover:bg-green-700 cursor-pointer' : 'bg-gray-400 cursor-not-allowed'}`}
-                title={`Silla ${seat.seatNumber}`}
+        ${
+          !seat.available
+            ? 'bg-gray-400 cursor-not-allowed'
+            : selectedSeatIds.includes(seat.id)
+            ? 'bg-yellow-400 opacity-75 hover:bg-yellow-500 cursor-pointer'
+            : 'bg-green-600 hover:bg-green-700 cursor-pointer'
+        }`}
+                  onClick={() => toggleSeatId(seat.id)}  // guardamos silla seleccionada aquí
               >
                 <FaChair className="mb-1" />
                 <span>{seat.seatNumber}</span>
@@ -57,6 +77,7 @@ const SeatsPage = () => {
           </div>
         ))}
       </div>
+      <SeatSummary />
     </div>
   );
 };

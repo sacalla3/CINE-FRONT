@@ -36,7 +36,9 @@ export const useTicketStore = create<TicketStore>((set) => ({
           : new Date(), // fallback actual
         roomNumber: ticket.function?.theatre?.roomNumber ?? 0,
         movieName: ticket.function?.movie?.title ?? "Desconocida",
-        seatNumber: ticket.seat?.seatNumber ?? 0,
+        seatNumbers: Array.isArray(ticket.seats) 
+        ? ticket.seats.map((seat: any) => seat.seatNumber) 
+        : [],
 
       }));
 

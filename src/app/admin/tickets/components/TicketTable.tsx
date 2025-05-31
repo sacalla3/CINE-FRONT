@@ -27,7 +27,10 @@ export default function TicketsTable({ tickets, onDelete }: TicketsTableProps) {
             <tr key={ticket.id} className="hover:bg-slate-50 border-b border-slate-200">
               <td className="p-4 py-5">{ticket.movieName}</td>
               <td className="p-4 py-5">{ticket.roomNumber}</td>
-              <td className="p-4 py-5">{ticket.seatNumber}</td>
+              <td className="p-4 py-5">
+                {ticket.seatNumbers.length > 0 ? ticket.seatNumbers.join(', ') : 'N/A'}
+              </td>
+
               <td className="p-4 py-5">{new Date(ticket.dateTime).toLocaleString()}</td>
               <td className="p-4 py-5">${ticket.pricePaid.toFixed(2)}</td>
               <td className="p-4 py-5">
