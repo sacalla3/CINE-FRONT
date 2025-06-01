@@ -6,6 +6,7 @@ import { getSeatsByFunctionId } from './services/seatService';
 import { useSelectionStore } from '../store/useSelectionStore';
 import { FunctionDetails } from './components/FunctionDetails';
 import { SeatSummary } from './components/SeatSummary'; // Asegúrate de tenerlo en la ruta correcta
+// 
 
 interface Seat {
   id: string;
@@ -15,6 +16,8 @@ interface Seat {
 
 
 const SeatsPage = () => {
+
+
 
   const toggleSeatId = useSelectionStore(state => state.toggleSeatId);
   const setSelectedFunctionId = useSelectionStore(state => state.setSelectedFunctionId);
@@ -75,9 +78,10 @@ const SeatsPage = () => {
               </button>
             ))}
           </div>
+          
         ))}
       </div>
-      <SeatSummary />
+      <SeatSummary/>
     </div>
   );
 };
