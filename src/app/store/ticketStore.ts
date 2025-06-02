@@ -26,7 +26,7 @@ export const useTicketStore = create<TicketStore>((set) => ({
 
       const transformedTickets: Ticket[] = response.data.map((ticket: any) => ({
         id: ticket.id,
-        status: ticket.status === "pagado",
+        status: ticket.status,
         pricePaid: parseInt(ticket.pricePaid ?? '0', 10), 
         dateTime: ticket.function?.dateTime
           ? new Date(ticket.function.dateTime)

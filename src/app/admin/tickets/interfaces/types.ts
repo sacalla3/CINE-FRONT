@@ -1,6 +1,6 @@
 export interface Ticket {
         id: string,
-        status: boolean,
+        status: string,
         pricePaid: number,
         dateTime: Date,
         roomNumber: number,

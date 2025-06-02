@@ -3,9 +3,15 @@
 import React, { useEffect } from "react";
 import TicketTable from "./components/TicketTable";
 import { useTicketStore } from "../../store/ticketStore";
+import { Ticket } from "./interfaces/types";
 
 const TicketsPage = () => {
   const { getTickets, tickets, loading, error } = useTicketStore();
+
+  const handleStatusChange = (ticket:Ticket) => {
+    // Aquí puedes manejar el cambio de estado del ticket si es necesario
+    console.log("Estado cambiado para el ticket:", ticket);
+  };
 
   useEffect(() => {
     getTickets();
@@ -21,7 +27,7 @@ const TicketsPage = () => {
       {!loading && tickets.length === 0 && <p>No hay boletos registrados.</p>}
 
       {!loading && tickets.length > 0 && (
-        <TicketTable tickets={tickets} />
+        <TicketTable tickets={tickets} onStatusChange={handleStatusChange}/>
       )}
     </div>
   );

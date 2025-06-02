@@ -21,6 +21,8 @@ const SeatsPage = () => {
 
   const toggleSeatId = useSelectionStore(state => state.toggleSeatId);
   const setSelectedFunctionId = useSelectionStore(state => state.setSelectedFunctionId);
+    const selectedFunctionId = useSelectionStore(state => state.selectedFunctionId);
+
   const selectedSeatIds = useSelectionStore(state => state.selectedSeatIds);
 
   //const setSelectedSeatId = useSelectionStore(state => state.setSelectedSeatId);
@@ -30,20 +32,17 @@ const SeatsPage = () => {
   const [functionId, setFunctionId] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = prompt('Ingresa el ID de la función:');
-    if (!id) return;
+    if (!selectedFunctionId) return;
 
-    // Guardar el ID de la función en el estado global
-    setSelectedFunctionId(id);
 
-    setFunctionId(id);
-    getSeatsByFunctionId(id)
+    
+    getSeatsByFunctionId(selectedFunctionId)
       .then((data) => setSeats(data))
       .catch((err) => console.error('Error al cargar sillas:', err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [selectedFunctionId]);
 
-  if (!functionId) return <p className="p-4">No se proporcionó ID de función.</p>;
+  if (!selectedFunctionId) return <p className="p-4">No se proporcionó ID de función.</p>;
   if (loading) return <p className="p-4">Cargando sillas...</p>;
 
   // Agrupar sillas por filas de máximo 15
@@ -55,7 +54,7 @@ const SeatsPage = () => {
   return (
     <div className="p-6 flex flex-col items-center">
       <h2 className="text-xl font-bold mb-4">Sillas de la función</h2>
-      <FunctionDetails functionId={functionId} />
+      <FunctionDetails functionId={selectedFunctionId} />
       <div className="space-y-2">
         {seatRows.map((row, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-2">
