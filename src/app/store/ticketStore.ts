@@ -27,10 +27,7 @@ export const useTicketStore = create<TicketStore>((set) => ({
       const transformedTickets: Ticket[] = response.data.map((ticket: any) => ({
         id: ticket.id,
         status: ticket.status === "pagado",
-        pricePaid:
-          ticket.function?.ticketPrice != null
-            ? Number(ticket.function.ticketPrice)
-            : 0,
+        pricePaid: parseInt(ticket.pricePaid ?? '0', 10), 
         dateTime: ticket.function?.dateTime
           ? new Date(ticket.function.dateTime)
           : new Date(), // fallback actual
