@@ -21,10 +21,10 @@ export default function CreateFunctionPage() {
     async function fetchData() {
       try {
         const [moviesRes, theatresRes] = await Promise.all([
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/movies`, {
+          fetch(`https://cine-nest-production.up.railway.app/api/movies`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           }),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/theatre`, {
+          fetch(`https://cine-nest-production.up.railway.app/api/theatre`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
           }),
         ]);
@@ -58,7 +58,7 @@ export default function CreateFunctionPage() {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/function`, {
+      const res = await fetch(`https://cine-nest-production.up.railway.app/api/function`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
