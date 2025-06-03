@@ -35,7 +35,7 @@ export default function MoviesPage() {
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const res = await fetch('http://localhost:3000/api/movies');
+      const res = await fetch('https://cine-nest-production.up.railway.app/api/movies');
       const moviesData = await res.json();
 
       const enriched = await Promise.all(

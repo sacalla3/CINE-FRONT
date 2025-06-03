@@ -23,7 +23,7 @@ export const useUserStore = create<UserStore>((set) => ({
       const token = localStorage.getItem('token');
       if (!token) throw new Error('Token no encontrado');
 
-      const response = await axios.get('http://localhost:3000/api/users/', {
+      const response = await axios.get('https://cine-nest-production.up.railway.app/api/users/', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

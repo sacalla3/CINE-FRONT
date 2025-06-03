@@ -33,7 +33,7 @@ export default function RegisterUserForm({
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/users', {
+      const res = await fetch('https://cine-nest-production.up.railway.app/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, cedula, password }),

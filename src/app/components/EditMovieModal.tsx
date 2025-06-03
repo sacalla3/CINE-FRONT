@@ -43,7 +43,7 @@ export const EditMovieModal: React.FC<EditMovieModalProps> = ({ movies, onClose,
         setLoading(false);
         return;
       }
-      const res = await fetch(`http://localhost:3000/api/movies/${selectedTitle}`, {
+      const res = await fetch(`https://cine-nest-production.up.railway.app/api/movies/${selectedTitle}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

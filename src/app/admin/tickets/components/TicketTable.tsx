@@ -36,7 +36,7 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        `http://localhost:3000/api/tickets/${selectedTicket.id}/status`,
+        `https://cine-nest-production.up.railway.app/api/tickets/${selectedTicket.id}/status`,
         { status: normalizedStatus },
         {
           headers: {
@@ -63,7 +63,7 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
 
   try {
     const token = localStorage.getItem('token');
-    await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`, {
+    await axios.delete(`https://cine-nest-production.up.railway.app/api/tickets/${ticketId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
