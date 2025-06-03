@@ -3,7 +3,7 @@
 describe('Dashboard de usuarios', () => {
   before(() => {
     // Login antes de acceder al dashboard de usuarios
-    cy.visit('http://localhost:3001/login');
+    cy.visit('https://cine-front-production.up.railway.app/login');
     cy.get('input[type="email"]').type('admin@example.com');
     cy.get('input[type="password"]').type('admin123');
     cy.get('button[type="submit"]').click();
@@ -11,7 +11,7 @@ describe('Dashboard de usuarios', () => {
   });
 
   it('El admin puede ver el dashboard de usuarios', () => {
-    cy.visit('http://localhost:3001/admin/users');
+    cy.visit('https://cine-front-production.up.railway.app/admin/users');
     cy.contains('Gestión de usuarios').should('be.visible');
     cy.contains('Usuarios').should('be.visible');
     cy.contains('Listado de usuarios registrados.').should('be.visible');

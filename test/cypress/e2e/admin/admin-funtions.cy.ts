@@ -3,7 +3,7 @@
 describe('Dashboard de funciones', () => {
   before(() => {
     // Login antes de acceder al dashboard de funciones
-    cy.visit('http://localhost:3001/login');
+    cy.visit('https://cine-front-production.up.railway.app/login');
     cy.get('input[type="email"]').type('admin@example.com');
     cy.get('input[type="password"]').type('admin123');
     cy.get('button[type="submit"]').click();
@@ -11,7 +11,7 @@ describe('Dashboard de funciones', () => {
   });
 
   it('El admin puede ver el dashboard de funciones y comprar boleto', () => {
-    cy.visit('http://localhost:3001/admin/functions');
+    cy.visit('https://cine-front-production.up.railway.app/admin/functions');
     cy.contains('Lista de funciones').should('be.visible');
     cy.get('div').contains('Sala:').should('exist');
     cy.get('div').contains('Fecha y hora:').should('exist');

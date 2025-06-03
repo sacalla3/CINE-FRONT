@@ -2,7 +2,7 @@
 
 describe('Flujo de compra de función por cliente', () => {
   before(() => {
-    cy.visit('http://localhost:3001/login');
+    cy.visit('https://cine-front-production.up.railway.app/login');
     cy.get('input[type="email"]').type('client3@example.com');
     cy.get('input[type="password"]').type('client123');
     cy.get('button[type="submit"]').click();
@@ -11,7 +11,7 @@ describe('Flujo de compra de función por cliente', () => {
 
   it('El cliente puede comprar dos boletos para una función', () => {
     // Ir a funciones
-    cy.visit('http://localhost:3001/admin/functions');
+    cy.visit('https://cine-front-production.up.railway.app/admin/functions');
         cy.contains('Lista de funciones', { timeout: 10000 }).should('be.visible');
 
     // Elegir la primera función y dar click en "Comprar boleto"
