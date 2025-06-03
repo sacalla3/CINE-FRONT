@@ -121,8 +121,8 @@ export default function Login() {
       {/* Imagen lateral derecha */}
       <div className="relative col-span-8 h-screen">
         <Image
-          src="https://sdmntprsouthcentralus.oaiusercontent.com/files/00000000-a7e0-61f7-bebd-850fb2006b41/raw?se=2025-05-27T22%3A56%3A09Z&sp=r&sv=2024-08-04&sr=b&scid=4b184b26-23c6-5610-8918-0c3ec1a33e57&skoid=732f244e-db13-47c3-bcc7-7ee02a9397bc&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-05-27T15%3A58%3A36Z&ske=2025-05-28T15%3A58%3A36Z&sks=b&skv=2024-08-04&sig=DgkWQGs/Dt5n7YJnIVAujUqe5oOfCsZYLmfmrFdtwU8%3D"
-          alt="Banner login"
+        src="/alpha-movie-logo.webp"
+         alt="Banner login"
           fill
           className="object-cover"
           priority
