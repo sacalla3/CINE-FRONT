@@ -25,8 +25,6 @@ export function UserSelector({ onSelectUser, onClose }: UserSelectorProps) {
     const functionId = useSelectionStore((state) => state.selectedFunctionId);
     const clearSelection = useSelectionStore((state) => state.clearSelection);
 
-
-
   useEffect(() => {
     const fetchUsers = async () => {
       try {

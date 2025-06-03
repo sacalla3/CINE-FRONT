@@ -18,10 +18,52 @@ export const SeatSummary = () => {
   const functionId = useSelectionStore((state) => state.selectedFunctionId);
   const clearSelection = useSelectionStore((state) => state.clearSelection);
 
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const role = localStorage.getItem('userRole');
+      setUserRole(role);
+    } 
+  }, []);
+
+
+
   const [showUserSelector, setShowUserSelector] = useState(false);
-  const handleBuyNow = () => {
-    setShowUserSelector(true);
-  };
+  const handleBuyNow = async () => {
+  if (userRole === 'client') {
+    try {
+      const token = localStorage.getItem('token');
+      const userId = localStorage.getItem('userId'); // asegúrate de guardar esto en login
+      if (!token || !userId) throw new Error('Token o usuario no encontrado');
+
+      await axios.post(
+        'http://localhost:3000/api/tickets',
+        {
+          functionId,
+          userId,
+          seatIds: selectedSeatIds,
+          status: 'valido',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert('Boletos creados con éxito');
+      clearSelection();
+      router.refresh();
+    } catch (error: any) {
+      console.error('Error al crear los boletos:', error.response?.data || error.message);
+      alert('Error al crear boletos');
+    }
+  } else {
+    setShowUserSelector(true); // admin o seller
+  }
+};
+
 
   useEffect(() => { 
     if (!selectedFunctionId) return;
@@ -71,6 +113,8 @@ export const SeatSummary = () => {
       <p className="text-lg mb-2">
         Total a pagar: <strong>${total.toFixed(2)}</strong>
       </p>
+
+
       <button
         className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow"
         disabled={selectedSeatIds.length === 0}
@@ -78,11 +122,13 @@ export const SeatSummary = () => {
       >
         Pagar ahora
       </button>
-      {showUserSelector && (
-        <UserSelector onSelectUser={handleUserSelect}
- onClose={() => setShowUserSelector(false)}/>
-         
-        )}
+      
+        {showUserSelector && (
+          <UserSelector onSelectUser={handleUserSelect}
+  onClose={() => setShowUserSelector(false)}/>
+          
+          )}
+      
 
     </div>
   );
