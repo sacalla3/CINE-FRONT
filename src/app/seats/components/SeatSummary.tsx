@@ -5,8 +5,12 @@ import { useEffect, useState } from 'react';
 import { getFunctionById } from '../services/functionService'; // Asegúrate de tener esta función
 import { UserSelector} from './UserSelector'; // Asegúrate de tener este componente
 import axios from 'axios';
+import { useRouter } from 'next/navigation'; // ✅ IMPORTACIÓN
+
 
 export const SeatSummary = () => {
+    const router = useRouter(); // ✅ INICIALIZA
+
   const { selectedFunctionId, selectedSeatIds } = useSelectionStore();
   const [pricePerSeat, setPricePerSeat] = useState<number>(0);
 
@@ -52,6 +56,7 @@ export const SeatSummary = () => {
       alert('Boletos creados con éxito');
       clearSelection(); // Limpia las sillas seleccionadas
       setShowUserSelector(false); // Cierra el modal
+      router.refresh(); 
     } catch (error: any) {
       console.error('Error al crear los boletos:', error.response?.data || error.message);
       alert('Error al crear boletos');

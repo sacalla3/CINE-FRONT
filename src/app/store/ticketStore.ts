@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import { Ticket } from "../admin/tickets/interfaces/types";
+import { useEffect, useState } from "react";
 
 interface TicketStore {
   tickets: Ticket[];

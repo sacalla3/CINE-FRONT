@@ -53,7 +53,7 @@ const menuItems = [
         }
         if (role === 'client') {
             return menuItems.filter(item =>
-                ['Películas', 'Funciones', 'Salas'].includes(item.title)
+                ['Películas', 'Funciones', 'Boletos'].includes(item.title)
             );
         }
         return [];

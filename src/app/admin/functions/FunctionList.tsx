@@ -2,11 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useSelectionStore } from '../../store/useSelectionStore'; // Zustand or custom hook
+
 
 export default function FunctionList() {
   const [functions, setFunctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { setSelectedFunctionId } = useSelectionStore(); // ✅ NUEVO
 
   useEffect(() => {
     async function fetchFunctions() {
@@ -48,7 +51,11 @@ export default function FunctionList() {
             </p>
 
             <button
-              onClick={() => router.push('/admin/tickets')}
+              onClick={() => {
+                setSelectedFunctionId(func.id); 
+                router.push('/seats');           
+              }}
+
               className="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-300"
             >
               Comprar boleto
