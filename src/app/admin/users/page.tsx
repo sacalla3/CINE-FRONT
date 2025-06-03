@@ -4,6 +4,7 @@ import { act, useEffect, useState } from 'react';
 import { UsersTable } from '../../components/UsersTable';
 import { SearchUserBar } from '../../components/SearchUserBar';
 import RegisterUserForm from '../../components/FormRegister';
+import { EditUserModal } from '@/app/components/EditUserModal';
 
 interface User {
   id: string;
@@ -20,6 +21,7 @@ export default function UsersPage() {
   const [error, setError] = useState('');
   const [showRegister, setShowRegister] = useState(false);
   const [foundUser, setFoundUser] = useState<User | null>(null);
+  const [editUser, setEditUser] = useState<User | null>(null);
 
   const fetchUsers = async () => {
     setError('');
@@ -40,7 +42,6 @@ export default function UsersPage() {
         return;
       }
             const data = await res.json();
-      // Agrega el campo activo y ordena por rol
       const filteredUsers = data
         .map((u: any) => ({
           id: u.id,
@@ -66,7 +67,7 @@ export default function UsersPage() {
   }, []);
 
   const handleEdit = (user: User) => {
-    alert(`Editar usuario: ${user.name}`);
+    setEditUser(user);
   };
 
     const handleDelete = async (user: User) => {
@@ -132,6 +133,18 @@ export default function UsersPage() {
           </div>
         </div>
       )}
+      {
+        editUser && (
+          <EditUserModal
+            user={editUser}
+            onClose={() => setEditUser(null)}
+            onUpdated={() => {
+              fetchUsers();
+              setEditUser(null);
+            }}
+          />
+        )
+      }
     </div>
   );
 }

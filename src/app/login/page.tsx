@@ -36,6 +36,8 @@ export default function Login() {
       }
 
       localStorage.setItem('token', token);
+      localStorage.setItem('userId', data.id);
+      localStorage.setItem('userRole', Array.isArray(data.role) ? data.role[0] : undefined);
       router.push('/dashboard');
     } catch (err) {
       setError('Error de red o del servidor');
