@@ -86,6 +86,8 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
       <table className="w-full text-left table-auto min-w-full">
         <thead>
           <tr>
+            <th className="p-4 border-b bg-slate-50">Usuario</th>
+            <th className="p-4 border-b bg-slate-50">Correo</th>
             <th className="p-4 border-b bg-slate-50">Película</th>
             <th className="p-4 border-b bg-slate-50">Sala</th>
             <th className="p-4 border-b bg-slate-50">Asiento</th>
@@ -98,6 +100,8 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
         <tbody>
           {tickets.map((ticket) => (
             <tr key={ticket.id} className="hover:bg-slate-50 border-b">
+              <td className="p-4 py-5">{ticket.userName}</td>
+              <td className="p-4 py-5">{ticket.userEmail}</td>
               <td className="p-4 py-5">{ticket.movieName}</td>
               <td className="p-4 py-5">{ticket.roomNumber}</td>
               <td className="p-4 py-5">

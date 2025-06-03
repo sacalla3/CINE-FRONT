@@ -25,6 +25,8 @@ export const useTicketStore = create<TicketStore>((set) => ({
       });
 
       const transformedTickets: Ticket[] = response.data.map((ticket: any) => ({
+        userName: ticket?.user?.name ?? "Desconocido",
+        userEmail: ticket?.user?.email ?? "Desconocido",
         id: ticket.id,
         status: ticket.status,
         pricePaid: parseInt(ticket.pricePaid ?? '0', 10), 
