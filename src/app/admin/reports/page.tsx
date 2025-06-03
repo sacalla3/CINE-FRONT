@@ -6,6 +6,9 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell,
   Legend
 } from 'recharts';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+import { useRef } from 'react';
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE', '#FFBB28', '#00C49F'];
 
@@ -14,6 +17,8 @@ const ReportsDashboard = () => {
   const [topViewed, setTopViewed] = useState([]);
   const [topSelling, setTopSelling] = useState([]);
   const [topTimeSlots, setTopTimeSlots] = useState([]);
+    const reportRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     const fetchReports = async () => {
@@ -49,12 +54,56 @@ const ReportsDashboard = () => {
   const gridStroke = '#444';
   const tooltipStyle = { backgroundColor: '#222', borderColor: '#555', color: '#fff' };
 
+const generatePDF = async () => {
+  console.log('Intentando generar PDF...'); // 👈 para test
+  if (!reportRef.current) {
+    console.log('Ref no existe');
+    return;
+  }
+
+  try {
+    const canvas = await html2canvas(reportRef.current, {
+      scale: 2,
+      backgroundColor: '#000',
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('reporte.pdf');
+  } catch (err) {
+    console.error('Error generando PDF:', err);
+  }
+};
+
+
   return (
     <div className="p-6 space-y-10" style={{ backgroundColor: '#000', color: '#eee', minHeight: '100vh' }}>
-      <h1 className="text-3xl font-bold mb-6" style={{ color: '#fff' }}>Panel de Reportes</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-3xl font-bold">Panel de Reportes</h1>
+        <button
+          onClick={generatePDF}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          Exportar PDF
+        </button>
+      </div>
 
       {/* Ventas por película */}
-      <div>
+        <div ref={reportRef} className="space-y-12 p-4 rounded-lg shadow-md">
+            <section>
+    <h2 className="text-xl font-semibold mt-8 mb-2">Resumen General</h2>
+    <p className="text-sm">
+        Este reporte incluye el análisis de ventas y vistas por película, junto con los horarios con mayor cantidad de tickets vendidos.
+        Los datos fueron generados por el sistema de reportes en tiempo real a partir de la actividad registrada en la plataforma.
+    </p>
+    </section>
+
+    <div>
         <h2 className="text-xl font-semibold mb-2" style={{ color: '#bbb' }}>Ventas por Película</h2>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={sales}>
@@ -133,6 +182,7 @@ const ReportsDashboard = () => {
             <Bar dataKey="ticketsSold" fill="#FF8042" />
           </BarChart>
         </ResponsiveContainer>
+      </div>
       </div>
     </div>
   );
