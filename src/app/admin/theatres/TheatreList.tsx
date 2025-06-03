@@ -15,7 +15,7 @@ export default function TheatreList() {
   useEffect(() => {
     async function fetchTheatres() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/theatre`, {
+        const res = await fetch(`https://cine-nest-production.up.railway.app/api/theatre`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },

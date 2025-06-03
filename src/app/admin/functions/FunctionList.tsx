@@ -20,7 +20,7 @@ export default function FunctionList() {
   useEffect(() => {
     async function fetchFunctions() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/function`, {
+        const res = await fetch(`https://cine-nest-production.up.railway.app/api/function`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`, // ejemplo si guardas token en localStorage
           },

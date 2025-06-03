@@ -18,7 +18,7 @@ export default function CreateTheatrePage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/theatre`, {
+      const res = await fetch(`https://cine-nest-production.up.railway.app/api/theatre`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
