@@ -31,7 +31,7 @@ export default function UsersPage() {
         setError('No autenticado. Inicie sesión como admin.');
         return;
       }
-      const res = await fetch('http://localhost:3000/api/users', {
+      const res = await fetch('https://cine-nest-production.up.railway.app/api/users', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export default function UsersPage() {
     if (!confirm(`¿Seguro que deseas eliminar al usuario con cédula ${user.cedula}?`)) return;
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/users/${user.cedula}`, {
+      const res = await fetch(`https://cine-nest-production.up.railway.app/api/users/${user.cedula}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -2,6 +2,6 @@
 import axios from 'axios';
 
 export const getFunctionById = async (id: string) => {
-  const response = await axios.get(`http://localhost:3000/api/function/${id}`);
+  const response = await axios.get(`https://cine-nest-production.up.railway.app/api/function/${id}`);
   return response.data;
 };

@@ -19,7 +19,7 @@ export const useClientTicketStore = create<ClientTicketStore>((set) => ({
     try {
       const token = localStorage.getItem('token');
       const response = await axios.post(
-        'http://localhost:3000/api/tickets/my-tickets',
+        'https://cine-nest-production.up.railway.app/api/tickets/my-tickets',
         { userId },
         {
           headers: {

@@ -24,7 +24,7 @@ export function SearchUserBar({ onResult }: { onResult: (user: User | null) => v
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/api/users/${searchTerm.trim()}`);
+      const res = await fetch(`https://cine-nest-production.up.railway.app/api/users/${searchTerm.trim()}`);
       if (!res.ok) {
         setSearchError('Usuario no encontrado');
         onResult(null);

@@ -24,7 +24,7 @@ const menuItems = [
         subTitle:'Gestión de funciones'
     },
     {
-        path:'/admin/theatre',
+        path:'/admin/theatres',
         icon:<IoBusinessOutline/>,
         title:'Salas',
         subTitle:'Gestión de salas'
@@ -73,7 +73,7 @@ export const Sidebar = () => {
     const handleSignOut = async () => {
         try {
             const token = localStorage.getItem('token');
-            await fetch('http://localhost:3000/api/auth/signout', {
+            await fetch('https://cine-nest-production.up.railway.app/api/auth/signout', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

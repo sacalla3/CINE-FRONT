@@ -9,12 +9,18 @@ export default function FunctionList() {
   const [functions, setFunctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { setSelectedFunctionId } = useSelectionStore(); // ✅ NUEVO
+  const { setSelectedFunctionId } = useSelectionStore();
+  const [userRole, setUserRole] = useState<string | null>(null);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setUserRole(localStorage.getItem('userRole'));
+    }
+  }, []);
 
   useEffect(() => {
     async function fetchFunctions() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/function`, {
+        const res = await fetch(`https://cine-nest-production.up.railway.app/api/function`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`, // ejemplo si guardas token en localStorage
           },
@@ -36,6 +42,14 @@ export default function FunctionList() {
   return (
     <div className="p-6 bg-gray-900 min-h-screen">
       <h1 className="text-2xl font-bold mb-4 text-white">Lista de funciones</h1>
+      {userRole === 'admin' && (
+        <button
+          onClick={() => router.push('/admin/functions/create')}
+          className="mb-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-300"
+        >
+          Crear nueva función
+        </button>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {functions.map((func: any) => (
           <div
