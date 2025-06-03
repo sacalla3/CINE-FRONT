@@ -63,17 +63,20 @@ export default function FunctionList() {
             <p className="text-gray-300">
               Fecha y hora: {new Date(func.dateTime).toLocaleString()}
             </p>
-
+          
+          
+            {(userRole === 'seller' || userRole === 'client') && (
             <button
               onClick={() => {
-                setSelectedFunctionId(func.id); 
-                router.push('/seats');           
+                setSelectedFunctionId(func.id);
+                router.push('/seats');
               }}
-
               className="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition duration-300"
             >
               Comprar boleto
             </button>
+          )}
+
 
           </div>
         ))}

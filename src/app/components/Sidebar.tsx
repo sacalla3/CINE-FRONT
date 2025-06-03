@@ -44,7 +44,9 @@ const menuItems = [
 ];
     function getMenuItemsByRole(role: string | null) {
         if (role === 'admin') {
-            return menuItems;
+            return menuItems.filter(item =>
+                ['Usuarios', 'Películas', 'Funciones', 'Salas', 'Reportes'].includes(item.title)
+            );
         }
         if (role === 'seller') {
             return menuItems.filter(item =>
