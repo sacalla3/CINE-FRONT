@@ -38,7 +38,7 @@ export const SeatSummary = () => {
       if (!token || !userId) throw new Error('Token o usuario no encontrado');
 
       await axios.post(
-        'http://localhost:3000/api/tickets',
+        'https://cine-nest-production.up.railway.app/api/tickets',
         {
           functionId,
           userId,
@@ -81,7 +81,7 @@ export const SeatSummary = () => {
       if (!token) throw new Error('Token no encontrado');
 
       await axios.post(
-        'http://localhost:3000/api/tickets',
+        'https://cine-nest-production.up.railway.app/api/tickets',
         {
           functionId,
           userId,

@@ -29,7 +29,7 @@ export function UserSelector({ onSelectUser, onClose }: UserSelectorProps) {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/users/', {
+        const response = await axios.get('https://cine-nest-production.up.railway.app/api/users/', {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(response.data);

@@ -29,7 +29,7 @@ export default function SelectFunctionButton() {
   const fetchFunctions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:3000/api/function', {
+      const response = await axios.get('https://cine-nest-production.up.railway.app/api/function', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

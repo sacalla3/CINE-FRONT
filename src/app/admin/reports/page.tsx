@@ -30,10 +30,10 @@ const ReportsDashboard = () => {
         }
         
         const [salesRes, viewedRes, sellingRes, timeSlotsRes] = await Promise.all([
-          axios.get('http://localhost:3000/api/reports/sales'),
-          axios.get('http://localhost:3000/api/reports/top-viewed'),
-          axios.get('http://localhost:3000/api/reports/top-selling'),
-          axios.get('http://localhost:3000/api/reports/top-selling-timeslots'), {headers: {
+          axios.get('https://cine-nest-production.up.railway.app/api/reports/sales'),
+          axios.get('https://cine-nest-production.up.railway.app/api/reports/top-viewed'),
+          axios.get('https://cine-nest-production.up.railway.app/api/reports/top-selling'),
+          axios.get('https://cine-nest-production.up.railway.app/api/reports/top-selling-timeslots'), {headers: {
             Authorization: `Bearer ${token}`},
           },
         ]);

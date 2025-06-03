@@ -24,7 +24,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose, onU
     try {
       const token = localStorage.getItem('token');
       // Actualizar nombre y email
-      const res = await fetch(`http://localhost:3000/api/users/${user.cedula}`, {
+      const res = await fetch(`https://cine-nest-production.up.railway.app/api/users/${user.cedula}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ user, onClose, onU
       }
       // Actualizar rol si cambió
       if (role !== user.role) {
-        const resRole = await fetch(`http://localhost:3000/api/auth/${user.cedula}`, {
+        const resRole = await fetch(`https://cine-nest-production.up.railway.app/api/auth/${user.cedula}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
