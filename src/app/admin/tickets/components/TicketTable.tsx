@@ -58,6 +58,25 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
     }
   };
 
+  const handleDelete = async (ticketId: string) => {
+  if (!confirm('¿Estás seguro de que deseas eliminar este ticket?')) return;
+
+  try {
+    const token = localStorage.getItem('token');
+    await axios.delete(`http://localhost:3000/api/tickets/${ticketId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    alert('Ticket eliminado exitosamente');
+    // Opcional: recargar la lista o eliminar el ticket localmente
+  } catch (error) {
+    console.error('Error al eliminar ticket:', error);
+    alert('No se pudo eliminar el ticket');
+  }
+};
+
+
   return (
     <div className="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white shadow-md rounded-lg bg-clip-border px-4 py-4">
       <div className="mb-4">
@@ -94,6 +113,13 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
                 >
                   Editar estado
                 </button>
+                <button
+                onClick={() => handleDelete(ticket.id)}
+                className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 ml-2"
+              >
+                Eliminar
+              </button>
+
                 {onDelete && (
                   <button
                     className="text-red-600 hover:underline"

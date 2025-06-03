@@ -40,6 +40,7 @@ export const SeatSummary = () => {
           functionId,
           userId,
           seatIds: selectedSeatIds,
+          status: 'valido',
         },
         {
           headers: {
