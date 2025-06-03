@@ -23,24 +23,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
+
     setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string) => {
-        const res = await fetch('http://localhost:3000/api/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-    })
+    const res = await fetch('http://localhost:3000/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
 
     if (!res.ok) throw new Error('Credenciales incorrectas');
 
     const data = await res.json();
+    console.log('Login response:', data);
     const token = data.accessToken.accessToken[0];
     const userId = data.id;
+    const userRole = Array.isArray(data.role) ? data.role[0] : undefined;
 
-    localStorage.setItem('token', token);
-    localStorage.setItem('userId', userId);
+
     setIsAuthenticated(true);
   };
 

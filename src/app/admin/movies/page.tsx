@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import MovieModal from './MovieModal';
+import { CreateMovieModal } from '@/app/components/CreateMovieModal';
+import { EditMovieModal } from '@/app/components/EditMovieModal';
 
 interface Movie {
   id: string;
@@ -20,6 +22,16 @@ interface Movie {
 export default function MoviesPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setUserRole(localStorage.getItem('userRole'));
+    }
+  }, []);
+ 
+
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -75,7 +87,24 @@ export default function MoviesPage() {
 
   return (
     <div className="bg-black min-h-screen text-white p-6">
+      
       <h1 className="text-3xl font-bold mb-6">Películas</h1>
+      {userRole === 'admin' && (
+        <>
+          <button
+            className="mb-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded font-bold"
+            onClick={() => setShowCreateModal(true)}
+          >
+            Crear nueva película
+          </button>
+          <button
+            className='mb-6 ml-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded font-bold'
+            onClick={() => setShowEditModal(true)}
+          >
+            Editar película
+          </button>
+        </>
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {movies.map((movie) => (
           <div key={movie.id} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:scale-105 transition">
@@ -104,6 +133,27 @@ export default function MoviesPage() {
           onClose={() => setSelectedMovie(null)}
         />
       )}
+      {showCreateModal && (
+        <CreateMovieModal
+          onClose={() => setShowCreateModal(false)}
+          onCreated={() => {
+            setShowCreateModal(false);
+    
+            window.location.reload(); 
+          }}
+        />
+      )}
+      {showEditModal && (
+        <EditMovieModal
+          movies={movies}
+          onClose={() => setShowEditModal(false)}
+          onUpdated={() => {
+            setShowEditModal(false);
+            window.location.reload();
+          }}
+        />
+      )}
+
     </div>
           
   );
