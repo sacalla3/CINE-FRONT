@@ -20,6 +20,8 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
   const [showModal, setShowModal] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [newStatus, setNewStatus] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   const openStatusModal = (ticket: Ticket) => {
     setSelectedTicket(ticket);
@@ -76,13 +78,24 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
   }
 };
 
+  const filteredTickets = tickets.filter(ticket =>
+  ticket.userName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  ticket.userEmail?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  ticket.movieName?.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   return (
     <div className="relative flex flex-col w-full h-full overflow-auto text-gray-700 bg-white shadow-md rounded-lg bg-clip-border px-4 py-4">
       <div className="mb-4">
         <SelectFunctionButton />
       </div>
-
+          <input
+        type="text"
+        placeholder="Buscar por nombre, correo o película"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="mb-4 p-2 border border-gray-300 rounded w-full"
+      />
       <table className="w-full text-left table-auto min-w-full">
         <thead>
           <tr>
@@ -98,7 +111,8 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
           </tr>
         </thead>
         <tbody>
-          {tickets.map((ticket) => (
+          
+          {filteredTickets.map((ticket) => (
             <tr key={ticket.id} className="hover:bg-slate-50 border-b">
               <td className="p-4 py-5">{ticket.userName}</td>
               <td className="p-4 py-5">{ticket.userEmail}</td>
