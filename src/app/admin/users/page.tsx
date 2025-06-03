@@ -91,60 +91,62 @@ export default function UsersPage() {
     }
   };
 
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold mb-6">Gestión de usuarios</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <div className="w-full flex justify-between items-center mb-3 mt-1 pl-3">
-        <div>
-          <h3 className="text-lg font-semibold text-slate-800">Usuarios</h3>
-          <p className="text-slate-500">Listado de usuarios registrados.</p>
-        </div>
+return (
+  <div className="min-h-screen bg-black p-0">
+    <div className="w-full bg-black px-8 pt-8 pb-4 flex flex-col md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 className="text-3xl font-bold text-blue-500 mb-1">Gestión de usuarios</h1>
+        <h3 className="text-lg font-semibold text-blue-400">Usuarios</h3>
+        <p className="text-blue-300">Listado de usuarios registrados.</p>
+      </div>
+      <div className="mt-4 md:mt-0 flex-shrink-0">
         <SearchUserBar onResult={setFoundUser} />
       </div>
+    </div>
+    {error && <p className="text-red-500 mb-4 px-8">{error}</p>}
+    <div className="px-4 md:px-8 pb-8">
       <UsersTable
         users={foundUser ? [foundUser] : users}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
       <button
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-bold shadow"
         onClick={() => setShowRegister(true)}
       >
         Crear usuario
       </button>
-      {showRegister && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 relative">
-            <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-              onClick={() => setShowRegister(false)}
-            >
-              ✕
-            </button>
-            <RegisterUserForm
-              onSuccess={() => {
-                setShowRegister(false);
-                fetchUsers();
-              }}
-              onClose={() => setShowRegister(false)}
-              showLoginButton={false}
-            />
-          </div>
-        </div>
-      )}
-      {
-        editUser && (
-          <EditUserModal
-            user={editUser}
-            onClose={() => setEditUser(null)}
-            onUpdated={() => {
-              fetchUsers();
-              setEditUser(null);
-            }}
-          />
-        )
-      }
     </div>
-  );
+    {showRegister && (
+      <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+        <div className="bg-white rounded-lg shadow-lg p-6 relative">
+          <button
+            className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+            onClick={() => setShowRegister(false)}
+          >
+            ✕
+          </button>
+          <RegisterUserForm
+            onSuccess={() => {
+              setShowRegister(false);
+              fetchUsers();
+            }}
+            onClose={() => setShowRegister(false)}
+            showLoginButton={false}
+          />
+        </div>
+      </div>
+    )}
+    {editUser && (
+      <EditUserModal
+        user={editUser}
+        onClose={() => setEditUser(null)}
+        onUpdated={() => {
+          fetchUsers();
+          setEditUser(null);
+        }}
+      />
+    )}
+  </div>
+);
 }
