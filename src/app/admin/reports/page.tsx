@@ -23,11 +23,19 @@ const ReportsDashboard = () => {
   useEffect(() => {
     const fetchReports = async () => {
       try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('Token no encontrado');
+          return;
+        }
+        
         const [salesRes, viewedRes, sellingRes, timeSlotsRes] = await Promise.all([
           axios.get('http://localhost:3000/api/reports/sales'),
           axios.get('http://localhost:3000/api/reports/top-viewed'),
           axios.get('http://localhost:3000/api/reports/top-selling'),
-          axios.get('http://localhost:3000/api/reports/top-selling-timeslots')
+          axios.get('http://localhost:3000/api/reports/top-selling-timeslots'), {headers: {
+            Authorization: `Bearer ${token}`},
+          },
         ]);
         setSales(salesRes.data);
 
