@@ -113,13 +113,6 @@ export default function TicketsTable({ tickets, onDelete, onStatusChange  }: Tic
                 >
                   Editar estado
                 </button>
-                <button
-                onClick={() => handleDelete(ticket.id)}
-                className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 ml-2"
-              >
-                Eliminar
-              </button>
-
                 {onDelete && (
                   <button
                     className="text-red-600 hover:underline"
