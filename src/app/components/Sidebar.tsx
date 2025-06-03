@@ -24,7 +24,7 @@ const menuItems = [
         subTitle:'Gestión de funciones'
     },
     {
-        path:'/admin/rooms',
+        path:'/admin/theatre',
         icon:<IoBusinessOutline/>,
         title:'Salas',
         subTitle:'Gestión de salas'
